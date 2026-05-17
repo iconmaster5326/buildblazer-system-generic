@@ -5,3 +5,6 @@ description: A build of a character in a generic TTRPG system.
 allOf:
   - $ref: https://github.com/iconmaster5326/buildblazer/schema/build.yaml
   - type: object
+    properties:
+      system:
+        const: generic
