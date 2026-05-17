@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://github.com/iconmaster5326/buildblazer-system-generic/schema/build.yaml
+title: (Generic) Build
+description: A build of a character in a generic TTRPG system.
+allOf:
+  - $ref: https://github.com/iconmaster5326/buildblazer/schema/build.yaml
+  - type: object
