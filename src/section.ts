@@ -1,10 +1,12 @@
-import { Entity, type EntityOptions } from "@buildblazer/core";
+import {
+  Entity,
+  type EntityOptions,
+  type SystemEntity,
+} from "@buildblazer/core";
 
 export class Section extends Entity {
-  static TYPE = "section";
-
   entityType(): string {
-    return Section.TYPE;
+    return Section.ETYPE.id;
   }
 
   constructor(options: EntityOptions = {}) {
@@ -17,11 +19,8 @@ export class Section extends Entity {
     };
   }
 
-  static register() {
-    Entity.FROM_JSON_REGISTRY[Section.TYPE] = (json: any) => {
-      return new Section(json);
-    };
-  }
+  static ETYPE: SystemEntity = {
+    id: "section",
+    deserializer: (json) => new Section(json),
+  };
 }
-
-Section.register();

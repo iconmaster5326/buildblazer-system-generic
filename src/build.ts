@@ -1,27 +1,26 @@
-import { Build, Entity } from "@buildblazer/core";
+import { Build, Entity, type System } from "@buildblazer/core";
 import { Character } from "./character";
+import { Section } from "./section";
+import { Trait } from "./trait";
 
 export class BuildGeneric extends Build {
-  static NAME = "generic";
-  static VERSION = 9;
-
   systemName(): string {
-    return BuildGeneric.NAME;
+    return BuildGeneric.SYSTEM.id;
   }
 
   systemVersion(): number {
-    return BuildGeneric.VERSION;
+    return BuildGeneric.SYSTEM.version;
   }
 
   baseEntity(): Entity {
     return new Character();
   }
 
-  static register() {
-    Build.FROM_JSON_REGISTRY[BuildGeneric.NAME] = (json: any) => {
-      return new BuildGeneric(json);
-    };
-  }
+  static SYSTEM: System = {
+    id: "generic",
+    name: "Generic",
+    version: 0,
+    entities: [Section.ETYPE, Trait.ETYPE],
+    deserializer: (json) => new BuildGeneric(json),
+  };
 }
-
-BuildGeneric.register();

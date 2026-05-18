@@ -2,15 +2,19 @@ import { describe, test, expect } from "vitest";
 import * as uuid from "uuid";
 
 import { BuildGeneric, Section, Trait } from "../src/index";
-import { Build, Entity } from "@buildblazer/core";
+import { Buildblazer } from "@buildblazer/core";
+
+const bb = new Buildblazer({
+  systems: [BuildGeneric.SYSTEM],
+});
 
 describe("builds", () => {
   test("ctor blank", () => {
     const b = new BuildGeneric();
 
-    expect(b.systemName()).toBe(BuildGeneric.NAME);
-    expect(b.systemVersion()).toBe(BuildGeneric.VERSION);
-    expect(b.loadedSystemVersion).toBe(BuildGeneric.VERSION);
+    expect(b.systemName()).toBe(BuildGeneric.SYSTEM.id);
+    expect(b.systemVersion()).toBe(BuildGeneric.SYSTEM.version);
+    expect(b.loadedSystemVersion).toBe(BuildGeneric.SYSTEM.version);
   });
 
   test("ctor initialized", () => {
@@ -26,16 +30,16 @@ describe("builds", () => {
 
   test("from JSON", () => {
     const id = uuid.v4();
-    const b = Build.fromJSON({
+    const b = bb.buildFromJSON({
       id: id,
-      system: BuildGeneric.NAME,
-      systemVersion: BuildGeneric.VERSION,
+      system: BuildGeneric.SYSTEM.id,
+      systemVersion: BuildGeneric.SYSTEM.version,
       name: "Test",
     });
 
     expect(b).toBeInstanceOf(BuildGeneric);
     expect(b.id).toBe(id);
-    expect(b.loadedSystemVersion).toBe(BuildGeneric.VERSION);
+    expect(b.loadedSystemVersion).toBe(BuildGeneric.SYSTEM.version);
     expect(b.name).toBe("Test");
   });
 
@@ -55,14 +59,14 @@ describe("sections", () => {
     const j = s.toJSON() as any;
 
     expect(j.id).toBe(s.id);
-    expect(j.type).toBe(Section.TYPE);
+    expect(j.type).toBe(Section.ETYPE.id);
   });
 
   test("from json", () => {
     const id = uuid.v4();
-    const s = Entity.fromJSON({
+    const s = bb.entityFromJSON({
       id: id,
-      type: Section.TYPE,
+      type: Section.ETYPE.id,
     });
 
     expect(s).toBeInstanceOf(Section);
@@ -78,15 +82,15 @@ describe("traits", () => {
     const j = t.toJSON() as any;
 
     expect(j.id).toBe(t.id);
-    expect(j.type).toBe(Trait.TYPE);
+    expect(j.type).toBe(Trait.ETYPE.id);
     expect(j.description).toBe(t.description);
   });
 
   test("from json", () => {
     const id = uuid.v4();
-    const t = Entity.fromJSON({
+    const t = bb.entityFromJSON({
       id: id,
-      type: Trait.TYPE,
+      type: Trait.ETYPE.id,
       description: "Test",
     });
 

@@ -1,16 +1,18 @@
-import { Entity, type EntityOptions } from "@buildblazer/core";
+import {
+  Entity,
+  type EntityOptions,
+  type SystemEntity,
+} from "@buildblazer/core";
 
 export interface TraitOptions extends EntityOptions {
   description?: string;
 }
 
 export class Trait extends Entity {
-  static TYPE = "trait";
-
   description: string;
 
   entityType(): string {
-    return Trait.TYPE;
+    return Trait.ETYPE.id;
   }
 
   constructor(options: TraitOptions = {}) {
@@ -25,11 +27,8 @@ export class Trait extends Entity {
     };
   }
 
-  static register() {
-    Entity.FROM_JSON_REGISTRY[Trait.TYPE] = (json: any) => {
-      return new Trait(json);
-    };
-  }
+  static ETYPE: SystemEntity = {
+    id: "trait",
+    deserializer: (json) => new Trait(json),
+  };
 }
-
-Trait.register();
