@@ -16,8 +16,12 @@ export class Character extends Entity {
       ...super.toJSON(),
     };
   }
+
+  static register() {
+    Entity.FROM_JSON_REGISTRY[Character.TYPE] = (json: any) => {
+      return new Character(json);
+    };
+  }
 }
 
-Entity.FROM_JSON_REGISTRY[Character.TYPE] = (json: any) => {
-  return new Character(json);
-};
+Character.register();

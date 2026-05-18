@@ -16,8 +16,12 @@ export class Section extends Entity {
       ...super.toJSON(),
     };
   }
+
+  static register() {
+    Entity.FROM_JSON_REGISTRY[Section.TYPE] = (json: any) => {
+      return new Section(json);
+    };
+  }
 }
 
-Entity.FROM_JSON_REGISTRY[Section.TYPE] = (json: any) => {
-  return new Section(json);
-};
+Section.register();

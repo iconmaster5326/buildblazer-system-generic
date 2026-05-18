@@ -24,8 +24,12 @@ export class Trait extends Entity {
       ...(this.description ? { description: this.description } : {}),
     };
   }
+
+  static register() {
+    Entity.FROM_JSON_REGISTRY[Trait.TYPE] = (json: any) => {
+      return new Trait(json);
+    };
+  }
 }
 
-Entity.FROM_JSON_REGISTRY[Trait.TYPE] = (json: any) => {
-  return new Trait(json);
-};
+Trait.register();

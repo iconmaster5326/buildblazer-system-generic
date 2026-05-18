@@ -16,8 +16,12 @@ export class BuildGeneric extends Build {
   baseEntity(): Entity {
     return new Character();
   }
+
+  static register() {
+    Build.FROM_JSON_REGISTRY[BuildGeneric.NAME] = (json: any) => {
+      return new BuildGeneric(json);
+    };
+  }
 }
 
-Build.FROM_JSON_REGISTRY[BuildGeneric.NAME] = (json: any) => {
-  return new BuildGeneric(json);
-};
+BuildGeneric.register();
