@@ -14,6 +14,9 @@ export default defineConfig({
       fileName: "index",
       name: packageJson.name,
     },
+    rolldownOptions: {
+      external: ["@buildblazer/core"],
+    },
   },
   test: {
     watch: false,
