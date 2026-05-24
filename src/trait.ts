@@ -1,5 +1,6 @@
 import {
   type Buildblazer,
+  Change,
   Entity,
   type EntityOptions,
   type SystemEntity,
@@ -44,5 +45,12 @@ export class Trait extends Entity {
       ...Entity.optionsFromJSON(bb, json),
       description: json.description,
     });
+  }
+
+  compare(after: Trait): Change[] {
+    return [
+      ...super.compare(after),
+      ...Entity.compareLiteralProperty("description", this, after),
+    ];
   }
 }
