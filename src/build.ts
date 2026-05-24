@@ -17,7 +17,10 @@ export class BuildGeneric extends Build {
   }
 
   baseEntity(): Entity {
-    return new Character();
+    return new Character({
+      id: this.id,
+      name: this.name,
+    });
   }
 
   /** System information. Pass this to {@link Buildblazer}. */

@@ -16,6 +16,8 @@ export class Character extends Entity {
   }
 
   toJSON(): object {
-    throw new Error("Cannot serialize characters!");
+    return {
+      ...super.toJSON(),
+    };
   }
 }
